@@ -4,6 +4,4 @@ const restController = {
   }
 }
 
-
-
 module.exports = restController
