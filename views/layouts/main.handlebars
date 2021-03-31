@@ -14,14 +14,14 @@
   <main role="main">
     <div class="album py-5 bg-light">
       <div class="container">
-        {{#if success_message}}
+        {{#if success_messages}}
         <div class="alert alert-success" role="alert">
-          {{success_message}}
+          {{success_messages}}
         </div>
         {{/if}}
-        {{#if error_message}}
+        {{#if error_messages}}
         <div class="alert alert-danger" role="alert">
-          {{error_message}}
+          {{error_messages}}
         </div>
         {{/if}}
         {{{body}}}
