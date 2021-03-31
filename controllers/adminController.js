@@ -2,6 +2,7 @@ const db = require('../models')
 const Restaurant = db.Restaurant
 
 const adminController = {
+  // 後首頁
   getRestaurants: (req, res) => {
     return Restaurant.findAll({ raw: true }).then(restaurants => {
       return res.render('admin/restaurants', { restaurants: restaurants })
@@ -28,6 +29,14 @@ const adminController = {
         req.flash('success_messages', 'restaurant was successfully created')
         res.redirect('/admin/restaurants')
       })
+  },
+
+  getRestaurant: (req, res) => {
+    return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => {
+      return res.render('admin/restaurant', {
+        restaurant: restaurant
+      })
+    })
   }
 
 }
