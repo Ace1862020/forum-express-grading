@@ -38,12 +38,13 @@ const adminController = {
       })
     })
   },
-  // 編輯特定餐廳頁
+  // 取得編輯特定餐廳表單
   editRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => {
       return res.render('admin/create', { restaurant: restaurant })
     })
   }
+  // 編輯並更新
 
 }
 
