@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const db = require('./models')
 const flash = require('connect-flash')
 const session = require('express-session')
+const methodOverride = require('method-override')
 const passport = require('./config/passport')
 
 const app = express()
@@ -12,6 +13,7 @@ const port = 3000
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 app.use(session({ secret: 'forumSecret', resave: false, saveUninitialized: false }))
 
 app.use(passport.initialize())
