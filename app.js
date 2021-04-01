@@ -14,8 +14,9 @@ app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-app.use(session({ secret: 'forumSecret', resave: false, saveUninitialized: false }))
+app.use('/upload', express.static(__dirname + '/upload'))
 
+app.use(session({ secret: 'forumSecret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 
