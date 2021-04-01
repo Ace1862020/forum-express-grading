@@ -8,11 +8,11 @@ const adminController = {
       return res.render('admin/restaurants', { restaurants: restaurants })
     })
   },
-
+  // 建立餐廳頁
   createRestaurant: (req, res) => {
     return res.render('admin/create')
   },
-
+  // 建立新餐廳
   postRestaurant: (req, res) => {
     if (!req.body.name) {
       req.flash('error_messages', "name didn't exist")
@@ -30,12 +30,18 @@ const adminController = {
         res.redirect('/admin/restaurants')
       })
   },
-
+  // 查看特定餐廳頁
   getRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => {
       return res.render('admin/restaurant', {
         restaurant: restaurant
       })
+    })
+  },
+  // 編輯特定餐廳頁
+  editRestaurant: (req, res) => {
+    return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => {
+      return res.render('admin/create', { restaurant: restaurant })
     })
   }
 
