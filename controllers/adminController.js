@@ -3,6 +3,7 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const db = require('../models')
 const Restaurant = db.Restaurant
+const User = db.User
 
 const adminController = {
   // 後首頁
@@ -11,6 +12,26 @@ const adminController = {
       return res.render('admin/restaurants', { restaurants: restaurants })
     })
   },
+
+  // 後台使用者名單頁
+  getUsers: async (req, res) => {
+    return User.findAll({ raw: true }).then((users) => {
+      return res.render('admin/users', { users: users })
+    })
+  },
+
+  // 更改管理權限
+  toggleAdmin: (req, res) => {
+    User.findByPk(req.params.id).then((user) => {
+      return user.update({
+        isAdmin: user.isAdmin ? 0 : 1
+      }).then((user) => {
+        req.flash('success_messages', `${user.name} has been successfully updated to ${user.isAdmin ? 'admin' : 'user'}`)
+        return res.redirect('/admin/users')
+      })
+    })
+  },
+
   // 建立餐廳頁
   createRestaurant: (req, res) => {
     return res.render('admin/create')
