@@ -4,11 +4,17 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const db = require('../models')
 const Restaurant = db.Restaurant
 const User = db.User
+const Category = db.Category
 
 const adminController = {
   // 後首頁
   getRestaurants: (req, res) => {
-    return Restaurant.findAll({ raw: true }).then(restaurants => {
+    return Restaurant.findAll({
+      raw: true,
+      nest: true,
+      include: [Category]
+    }).then(restaurants => {
+      //console.log(restaurants)
       return res.render('admin/restaurants', { restaurants: restaurants })
     })
   },
@@ -75,9 +81,12 @@ const adminController = {
   },
   // 查看特定餐廳頁
   getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, { raw: true }).then(restaurant => {
+    return Restaurant.findByPk(req.params.id, {
+      include: [Category]
+    }).then(restaurant => {
+      //console.log('restaurant.toJSON()', restaurant.toJSON())
       return res.render('admin/restaurant', {
-        restaurant: restaurant
+        restaurant: restaurant.toJSON()
       })
     })
   },
