@@ -38,7 +38,7 @@ const restController = {
       }))
       Category.findAll({
         raw: true,
-        next: true
+        nest: true
       }).then((categories) => {
         return res.render('restaurants', {
           restaurants: data,
