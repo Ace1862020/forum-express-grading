@@ -5,7 +5,7 @@ const commentController = {
 
   postComment: (req, res) => {
     return Comment.create({
-      text: req.body.test,
+      text: req.body.text,
       RestaurantId: req.body.restaurantId,
       UserId: req.user.id
     })
@@ -13,7 +13,6 @@ const commentController = {
         res.redirect(`/restaurant/${req.body.restaurantId}`)
       })
   }
-
 }
 
 module.exports = commentController
