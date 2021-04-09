@@ -1,8 +1,8 @@
-<form action="/users/{{uesr.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+<form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
 
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{restaurant.name}}">
+    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
   </div>
 
   <div class="form-group">
@@ -10,6 +10,5 @@
     <input type="file" class="form-control-file" id="image" name="image">
   </div>
 
-  <button type="submit" class="btn btn-primary">edit</button>
-
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
