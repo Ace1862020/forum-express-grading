@@ -2,8 +2,11 @@ const bcrypt = require('bcryptjs')
 const fs = require('fs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const db = require('../models')
 const User = db.User
+
+const helper = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -57,11 +60,12 @@ const userController = {
   },
 
   editUser: (req, res) => {
-    if (req.user.id.toString() !== req.params.id) {
+    const reqUser = helper.getUser(req)
+    if (reqUser.id.toString() !== req.params.id) {
       req.flash('error_messages', 'Sorry! you only modify yourself profile')
-      return res.redirect(`/users/${req.user.id}`)
+      return res.redirect(`/users/${req.params.id}`)
     } else {
-      User.findByPk(req.user.id, { raw: true })
+      User.findByPk(reqUser.id, { raw: true })
         .then(user => {
           return res.render('users/edit', { user: user })
         })
