@@ -53,6 +53,14 @@ const userController = {
       })
   },
 
+  editUser: (req, res) => {
+    User.findByPk(req.params.id, { raw: true })
+      .then((user) => {
+        //console.log('user: ', user)
+        return res.render('users/edit', { user: user })
+      })
+  },
+
 }
 
 module.exports = userController

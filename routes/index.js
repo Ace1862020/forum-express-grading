@@ -32,6 +32,7 @@ module.exports = (app, passport) => {
   app.delete('/comments/:id', authenticateAdmin, commentController.deleteComment)
 
   app.get('/users/:id', authenticated, userController.getUser)
+  app.get('/users/:id/edit', authenticated, userController.editUser)
 
   app.get('/admin', authenticateAdmin, (req, res) => { res.redirect('/admin/restaurants') })
   app.get('/admin/restaurants', authenticateAdmin, adminController.getRestaurants)
