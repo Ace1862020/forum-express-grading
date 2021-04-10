@@ -5,7 +5,8 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const db = require('../models')
 const User = db.User
-
+const Restaurant = db.Restaurant
+const Comment = db.Comment
 const helper = require('../_helpers')
 
 const userController = {
@@ -53,9 +54,21 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    User.findByPk(req.params.id, { raw: true })
-      .then(user => {
-        return res.render('users/user', { user: user })
+
+    User.findByPk(req.params.id, {
+      raw: true,
+      nest: true,
+      include: [{ model: Comment, include: [Restaurant] }]
+    })
+      .then((user) => {
+        Comment.findAndCountAll({
+          raw: true,
+          nest: true,
+          where: { UserId: req.params.id },
+          include: [Restaurant]
+        }).then((comment) => {
+          return res.render('users/user', { user: user, commentNumber: comment.count, comments: comment.rows })
+        })
       })
   },
 
