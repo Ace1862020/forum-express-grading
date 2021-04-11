@@ -60,6 +60,10 @@ const restController = {
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
+      if (!restaurant) {
+        req.flash('error_messages', '沒有此餐廳')
+        return res.redirect('/restaurants')
+      }
       restaurant.increment('viewCounts')
       res.render('restaurant', {
         restaurant: restaurant.toJSON(),
