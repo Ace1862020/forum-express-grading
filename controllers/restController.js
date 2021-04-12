@@ -1,4 +1,5 @@
 const db = require('../models')
+const helper = require('../_helpers')
 const Restaurant = db.Restaurant
 const Category = db.Category
 const User = db.User
@@ -25,6 +26,7 @@ const restController = {
       offset: offset,
       limit: pageLimit
     }).then(result => {
+      const reqUser = helper.getUser(req)
       const page = Number(req.query.page) || 1
       const pages = Math.ceil(result.count / pageLimit)
       const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
@@ -34,7 +36,8 @@ const restController = {
       const data = result.rows.map(r => ({
         ...r.dataValues,
         description: r.dataValues.description.substring(0, 50),
-        categoryName: r.Category.name
+        categoryName: r.Category.name,
+        isFavorited: reqUser.FavoritedRestaurants.map(d => d.id).includes(r.id)
       }))
       Category.findAll({
         raw: true,
@@ -57,6 +60,7 @@ const restController = {
     return Restaurant.findByPk(req.params.id, {
       include: [
         Category,
+        { model: User, as: 'FavoritedUsers' },
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
@@ -64,9 +68,12 @@ const restController = {
         req.flash('error_messages', '沒有此餐廳')
         return res.redirect('/restaurants')
       }
+      const reqUser = helper.getUser(req)
+      const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(reqUser.id)
       restaurant.increment('viewCounts')
       res.render('restaurant', {
         restaurant: restaurant.toJSON(),
+        isFavorited: isFavorited
       })
     })
   },
