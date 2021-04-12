@@ -10,7 +10,7 @@ module.exports = {
     const restaurants = await Restaurant.findAll()
 
     await queryInterface.bulkInsert('Comments',
-      Array.from({ length: 5 }).map((comment, index) =>
+      Array.from({ length: 10 }).map((comment, index) =>
       ({
         id: index + 1,
         text: faker.lorem.sentence(),
