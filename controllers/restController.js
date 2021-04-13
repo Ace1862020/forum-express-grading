@@ -136,6 +136,7 @@ const restController = {
         restaurants = restaurants.map((restaurant) => ({
           ...restaurant.dataValues,
           description: restaurant.dataValues.description.substring(0, 50),
+          Category: restaurant.dataValues.Category.dataValues,
           favoritedCount: restaurant.FavoritedUsers.length,
           isFavorited: users.FavoritedRestaurants.map(d => d.id).includes(restaurant.dataValues.id)
         }))
