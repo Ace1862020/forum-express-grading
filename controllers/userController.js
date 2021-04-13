@@ -4,6 +4,7 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const db = require('../models')
+const user = require('../models/user')
 const User = db.User
 const Restaurant = db.Restaurant
 const Comment = db.Comment
@@ -171,8 +172,24 @@ const userController = {
           return res.redirect('back')
         })
     })
-  }
+  },
 
+  getTopUser: (req, res) => {
+    return User.findAll({
+      include: [
+        { model: User, as: 'Followers' }
+      ]
+    }).then(users => {
+      const reqUser = helper.getUser(req)
+      users = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: reqUser.Followings.map(d => d.id).includes(user.id)
+      }))
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      return res.render('topUser', { users: users })
+    })
+  },
 }
 
 module.exports = userController
