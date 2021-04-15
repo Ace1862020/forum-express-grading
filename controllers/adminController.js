@@ -1,4 +1,4 @@
-const adminService = require('../service/adminService')
+const adminService = require('../services/adminService')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const db = require('../models')
@@ -7,7 +7,7 @@ const User = db.User
 const Category = db.Category
 
 const adminController = {
-  // 後首頁
+  // 後首頁:refactor
   getRestaurants: (req, res) => {
     adminService.getRestaurants(req, res, (data) => {
       return res.render('admin/restaurants', data)
@@ -80,17 +80,14 @@ const adminController = {
       })
     }
   },
+
   // 查看特定餐廳頁
   getRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id, {
-      include: [Category]
-    }).then(restaurant => {
-      //console.log('restaurant.toJSON()', restaurant.toJSON())
-      return res.render('admin/restaurant', {
-        restaurant: restaurant.toJSON()
-      })
+    adminService.getRestaurant(req, res, (data) => {
+      return res.render('admin/restaurant', data)
     })
   },
+
   // 取得編輯特定餐廳表單
   editRestaurant: (req, res) => {
     Category.findAll({

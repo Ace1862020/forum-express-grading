@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
+const passport = require('../config/passport')
 const helpers = require('../_helpers')
 const restController = require('../controllers/restController')
 const adminController = require('../controllers/adminController')
@@ -52,16 +52,16 @@ router.delete('/like/:restaurantId', authenticated, userController.unlikeRestaur
 
 router.get('/admin', authenticateAdmin, (req, res) => { res.redirect('/admin/restaurants') })
 router.get('/admin/restaurants', authenticateAdmin, adminController.getRestaurants)
-router.get('/admin/users', authenticateAdmin, adminController.getUsers) //users
+router.get('/admin/users', authenticateAdmin, adminController.getUsers)
 router.put('/admin/users/:id/toggleAdmin', authenticateAdmin, adminController.toggleAdmin)
 router.get('/admin/restaurants/create', authenticateAdmin, adminController.createRestaurant)
 router.post('/admin/restaurants', authenticateAdmin, upload.single('image'), adminController.postRestaurant)
-router.get('/admin/restaurants/:id', authenticateAdmin, adminController.getRestaurant)
+router.get('/admin/restaurants/:id', authenticateAdmin, adminController.getRestaurant) // refactor
 router.get('/admin/restaurants/:id/edit', authenticateAdmin, adminController.editRestaurant)
 router.put('/admin/restaurants/:id', authenticateAdmin, upload.single('image'), adminController.putRestaurant)
 router.delete('/admin/restaurants/:id', authenticateAdmin, adminController.deleteRestaurant)
 
-router.get('/admin/categories', authenticateAdmin, categoryController.getCategories)
+router.get('/admin/categories', authenticateAdmin, categoryController.getCategories)  // refactor
 router.post('/admin/categories', authenticateAdmin, categoryController.postCategories)
 router.get('/admin/categories/:id', authenticateAdmin, categoryController.getCategories)
 router.put('/admin/categories/:id', authenticateAdmin, categoryController.putCategory)

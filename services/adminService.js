@@ -17,6 +17,14 @@ const adminService = {
     })
   },
 
+  getRestaurant: (req, res, callbak) => {
+    return Restaurant.findByPk(req.params.id, {
+      include: [Category]
+    }).then(restaurant => {
+      callbak({ restaurant: restaurant.toJSON() })
+    })
+  },
+
 }
 
 module.exports = adminService
