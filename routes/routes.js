@@ -56,16 +56,16 @@ router.get('/admin/users', authenticateAdmin, adminController.getUsers)
 router.put('/admin/users/:id/toggleAdmin', authenticateAdmin, adminController.toggleAdmin)
 router.get('/admin/restaurants/create', authenticateAdmin, adminController.createRestaurant)
 router.post('/admin/restaurants', authenticateAdmin, upload.single('image'), adminController.postRestaurant)
-router.get('/admin/restaurants/:id', authenticateAdmin, adminController.getRestaurant) // refactor
+router.get('/admin/restaurants/:id', authenticateAdmin, adminController.getRestaurant)
 router.get('/admin/restaurants/:id/edit', authenticateAdmin, adminController.editRestaurant)
 router.put('/admin/restaurants/:id', authenticateAdmin, upload.single('image'), adminController.putRestaurant)
 router.delete('/admin/restaurants/:id', authenticateAdmin, adminController.deleteRestaurant)
 
-router.get('/admin/categories', authenticateAdmin, categoryController.getCategories)  // refactor
-router.post('/admin/categories', authenticateAdmin, categoryController.postCategories)
+router.get('/admin/categories', authenticateAdmin, categoryController.getCategories)
+router.post('/admin/categories', authenticateAdmin, categoryController.postCategories) //refactor
 router.get('/admin/categories/:id', authenticateAdmin, categoryController.getCategories)
-router.put('/admin/categories/:id', authenticateAdmin, categoryController.putCategory)
-router.delete('/admin/categories/:id', authenticateAdmin, categoryController.deleteCategory)
+router.put('/admin/categories/:id', authenticateAdmin, categoryController.putCategory) //refactor
+router.delete('/admin/categories/:id', authenticateAdmin, categoryController.deleteCategory) //refactor
 
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
