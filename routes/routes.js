@@ -62,9 +62,9 @@ router.put('/admin/restaurants/:id', authenticateAdmin, upload.single('image'), 
 router.delete('/admin/restaurants/:id', authenticateAdmin, adminController.deleteRestaurant)
 
 router.get('/admin/categories', authenticateAdmin, categoryController.getCategories)
-router.post('/admin/categories', authenticateAdmin, categoryController.postCategories) //refactor
+router.post('/admin/categories', authenticateAdmin, categoryController.postCategories)
 router.get('/admin/categories/:id', authenticateAdmin, categoryController.getCategories)
-router.put('/admin/categories/:id', authenticateAdmin, categoryController.putCategory) //refactor
+router.put('/admin/categories/:id', authenticateAdmin, categoryController.putCategory)
 router.delete('/admin/categories/:id', authenticateAdmin, categoryController.deleteCategory) //refactor
 
 router.get('/signup', userController.signUpPage)
