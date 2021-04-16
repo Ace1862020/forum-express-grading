@@ -9,6 +9,27 @@ const JwtStrategy = passportJWT.Strategy
 
 let userController = {
 
+  signUp: (req, res) => {
+    if (req.body.password !== req.body.passwordCheck) {
+      return res.json({ status: 'errpr', message: '密碼與密碼確認不符!' })
+    } else {
+      User.findOne({ where: { email: req.body.email } })
+        .then(user => {
+          if (user) {
+            return res.json({ status: 'errpr', message: 'Email 已被註冊!' })
+          } else {
+            User.create({
+              name: req.body.name,
+              email: req.body.email,
+              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+            }).then(user => {
+              return res.json({ status: 'success', message: '註冊成功' })
+            })
+          }
+        })
+    }
+  },
+
   signIn: (req, res) => {
     // 檢查必要資料
     if (!req.body.email || !req.body.password) {
