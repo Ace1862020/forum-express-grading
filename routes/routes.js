@@ -65,7 +65,7 @@ router.get('/admin/categories', authenticateAdmin, categoryController.getCategor
 router.post('/admin/categories', authenticateAdmin, categoryController.postCategories)
 router.get('/admin/categories/:id', authenticateAdmin, categoryController.getCategories)
 router.put('/admin/categories/:id', authenticateAdmin, categoryController.putCategory)
-router.delete('/admin/categories/:id', authenticateAdmin, categoryController.deleteCategory) //refactor
+router.delete('/admin/categories/:id', authenticateAdmin, categoryController.deleteCategory)
 
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
