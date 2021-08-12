@@ -38,7 +38,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "pg": "^8.5.1",
+    "pg": "^8.7.1",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0",
     "sinon": "^9.2.0",
